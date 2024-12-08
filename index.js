@@ -6,23 +6,13 @@
 const todoInputElement = document.querySelector('#todo-input')
 const addTodoButton = document.querySelector("#add-todo-button");
 const todoListElement = document.querySelector('ol');
+const todos = [];
 
 addTodoButton.addEventListener('click', addTodo);
 
-let todo = todoInputElement.value;
-
-const todos = [];
-
-function getInputValue() {
-    todo = todoInputElement.value;
-}
-
-function createListItemElement() {
+function createListItemElement(todoToAdd) {
     const listItem = document.createElement('li');
-    listItem.id = todo
-    listItem.setAttribute('data-todo', todo);
-
-    listItem.innerText = todo;
+    listItem.innerText = todoToAdd;
     todoListElement.appendChild(listItem);
     createRemoveButtonElement(listItem);
 }
@@ -34,7 +24,14 @@ function createRemoveButtonElement(listItemElement) {
     listItemElement.appendChild(removeButton);
 }
 
+function addTodo() {
+    const todoToAdd = todoInputElement.value;
+    todos.push(todoToAdd)
+    createListItemElement(todoToAdd)
 
+    //reset input
+    todoInputElement.value = '';
+}
 
 function removeTodo(event) {
     const target = event.target;
@@ -48,12 +45,5 @@ function removeTodo(event) {
     }
 }
 
-function addTodo(event) {
-    console.log(event)
 
-    getInputValue();
-    todos.push(todo)
-    createListItemElement()
-    todoInputElement.value = '';
-}
 
